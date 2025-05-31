@@ -1,0 +1,231 @@
+<!DOCTYPE html><html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homenagem aos meus pais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Pacifico', cursive;
+      background: linear-gradient(to bottom, #000000, #8b0000);
+      color: #fff;
+      padding: 20px;
+      font-size: 18px;
+      overflow-x: hidden;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #ff4d4d;
+    }
+    .quiz {
+      margin-bottom: 40px;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      margin: 5px 0;
+      padding: 10px;
+      font-size: 16px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #444;
+      color: #fff;
+    }
+    .correct {
+      background-color: #00cc66 !important;
+    }
+    .incorrect {
+      background-color: #cc0000 !important;
+    }
+    .compatibility {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .compatibility input {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .compatibility button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #cc0000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      background: #222;
+      max-width: 800px;
+      margin: 0 auto 40px auto;
+      color: #fff;
+    }
+    #showHearts {
+      display: block;
+      margin: 20px auto;
+      padding: 15px 30px;
+      font-size: 20px;
+      background-color: #cc0000;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .heart {
+      position: fixed;
+      color: white;
+      font-size: 24px;
+      animation: fall 2s linear forwards;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      0% { top: 0; opacity: 1; }
+      100% { top: 100vh; opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Quiz sobre mim!</h1>
+  <div class="quiz" id="quiz"></div>
+  <h2 id="score"></h2>  <div class="compatibility">
+    <h2>Teste de Compatibilidade Familiar 💖</h2>
+    <input type="text" placeholder="Pai">
+    <input type="text" placeholder="Mãe">
+    <input type="text" placeholder="Filha">
+    <input type="text" placeholder="Filho">
+    <br>
+    <button onclick="showLove()">Ver Compatibilidade</button>
+    <p style="font-size: 24px; margin-top: 10px;" id="love"></p>
+  </div>  <div class="card">
+    <p>Eu queria aproveitar esse momento pra dizer o quanto eu amo vocês. Não só pelo que vocês fazem, mas por quem vocês são.<br><br>
+    Vocês sempre estiveram ao meu lado, me apoiando em cada passo, topando minhas loucuras, cuidando de mim com tanto carinho e dedicação.<br><br>
+    Nunca faltou amor, e mesmo nas horas difíceis, vocês souberam me mostrar o caminho certo com paciência, disciplina e sabedoria.<br><br>
+    Vocês me ensinaram valores que eu vou levar pra vida inteira, e é por tudo isso que eu serei eternamente grata.<br><br>
+    Obrigada por nunca desistirem de mim, por acreditarem em mim, mesmo quando eu duvidei, e por serem meu porto seguro todos os dias.<br><br>
+    Eu não seria quem sou sem vocês. Amo vocês mais do que palavras podem dizer.<br><br>
+    Com todo meu amor,<br>
+    <strong>Júlia</strong></p>
+  </div><button id="showHearts">CLIQUE AQUI</button>
+
+  <script>
+    const questions = [
+      {
+        question: "Quantos anos eu tenho?",
+        options: ["10", "12", "13", "14"],
+        correct: 2
+      },
+      {
+        question: "Qual minha cor favorita?",
+        options: ["Azul", "Preto", "Rosa", "Branco"],
+        correct: 1
+      },
+      {
+        question: "Qual minha matéria favorita?",
+        options: ["Matemática", "História", "Artes", "Ciências"],
+        correct: 0
+      },
+      {
+        question: "Qual minha outra matéria favorita?",
+        options: ["Português", "Inglês", "Geografia", "Artes"],
+        correct: 2
+      },
+      {
+        question: "Qual eu mais amo?",
+        options: ["Coca-Cola", "Sprite", "Guaraná", "Pepsi"],
+        correct: 3
+      },
+      {
+        question: "Qual eu prefiro?",
+        options: ["Dormir", "Assistir", "Jogar", "Brincar"],
+        correct: 0
+      },
+      {
+        question: "O que mais eu prefiro?",
+        options: ["Comer", "Viajar", "Passear", "Ficar em casa"],
+        correct: 1
+      },
+      {
+        question: "Qual meu esporte favorito?",
+        options: ["Vôlei", "Basquete", "Futebol", "Handebol"],
+        correct: 2
+      },
+      {
+        question: "Qual minha comida favorita?",
+        options: ["Strogonoff", "Lasanha", "Macarrão com sardinha", "Pizza"],
+        correct: 0
+      },
+      {
+        question: "Qual eu prefiro?",
+        options: ["Momentos com a família", "Momentos com amigos", "Nenhum desses", "Ficar sozinha"],
+        correct: 0
+      }
+    ];
+
+    let score = 0;
+    const quizDiv = document.getElementById("quiz");
+
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.classList.add("question");
+      const title = document.createElement("p");
+      title.innerText = `${i + 1}) ${q.question}`;
+      div.appendChild(title);
+
+      const optionsDiv = document.createElement("div");
+      optionsDiv.classList.add("options");
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.innerText = opt;
+        btn.onclick = () => {
+          const buttons = optionsDiv.querySelectorAll("button");
+          buttons.forEach((b, bIdx) => {
+            b.disabled = true;
+            if (bIdx === q.correct) {
+              b.classList.add("correct");
+            } else {
+              b.classList.add("incorrect");
+            }
+          });
+          if (idx === q.correct) score++;
+          document.getElementById("score").innerText = `Pontuação: ${score}/${questions.length}`;
+        };
+        optionsDiv.appendChild(btn);
+      });
+      div.appendChild(optionsDiv);
+      quizDiv.appendChild(div);
+    });
+
+    function showLove() {
+      const love = document.getElementById("love");
+      const random = Math.floor(Math.random() * 11) + 90; // entre 90% e 100%
+      love.innerHTML = `Amor da família: <strong>${random}%</strong> ❤️`;
+    }
+
+    document.getElementById("showHearts").onclick = () => {
+      let interval = setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.top = "0";
+        heart.innerText = "🤍";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+      }, 100);
+
+      setTimeout(() => clearInterval(interval), 10000);
+    };
+  </script></body>
+</html>
